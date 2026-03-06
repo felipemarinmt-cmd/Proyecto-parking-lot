@@ -1,1 +1,0 @@
-alert("Vehicule model loaded successfully!");

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ParkLot | Sistema de Gestión Profesional</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <!-- PANTALLA DE LOGIN -->
+    <div id="login-screen" class="screen-container">
+        <div class="glass-panel login-box">
+            <div class="logo-large">
+                <i class="ri-parking-box-line"></i>
+                <span>ParkLot</span>
+            </div>
+            <h2>Iniciar Sesión</h2>
+            <p>Ingresa tus credenciales para administrar el parqueadero</p>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label><i class="ri-user-line"></i> Documento / Usuario</label>
+                    <input type="text" id="login-doc" placeholder="admin001" required autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label><i class="ri-lock-password-line"></i> Contraseña</label>
+                    <input type="password" id="login-pwd" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary w-full mt-4">Ingresar al Sistema <i
+                        class="ri-arrow-right-line"></i></button>
+                <p id="login-error" class="error-msg hide"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- PANTALLA DEL DASHBOARD -->
+    <div id="dashboard-screen" class="screen-container hide layout-grid">
+
+        <!-- SIDEBAR -->
+        <aside class="glass-sidebar">
+            <div class="logo">
+                <i class="ri-parking-box-line"></i>
+                <span>ParkLot</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active"><i class="ri-dashboard-line"></i> Dashboard</a>
+                <a href="#"><i class="ri-car-line"></i> Vehículos</a>
+                <a href="#"><i class="ri-layout-grid-fill"></i> Celdas</a>
+                <a href="#"><i class="ri-file-list-3-line"></i> Reportes</a>
+                <a href="#"><i class="ri-settings-4-line"></i> Configuración</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="btn-logout" class="btn-logout"><i class="ri-logout-circle-r-line"></i> Cerrar
+                    Sesión</button>
+            </div>
+        </aside>
+
+        <!-- ÁREA PRINCIPAL -->
+        <main class="main-content">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+                <div>
+                    <h1 class="page-title">Vista General</h1>
+                    <p class="page-subtitle">Monitoreo en tiempo real del parqueadero</p>
+                </div>
+                <div class="user-profile">
+                    <div class="user-info">
+                        <h4 id="user-name">Admin</h4>
+                        <span id="user-role">Administrador</span>
+                    </div>
+                    <div class="avatar">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff&rounded=true"
+                            alt="User">
+                    </div>
+                </div>
+            </header>
+
+            <!-- TARJETAS DE INDICADORES (KPIs) -->
+            <section class="kpi-grid">
+                <div class="glass-card kpi-card">
+                    <div class="kpi-icon blue"><i class="ri-layout-grid-line"></i></div>
+                    <div class="kpi-info">
+                        <h3>Total Celdas</h3>
+                        <h2 id="kpi-total">0</h2>
+                    </div>
+                </div>
+                <div class="glass-card kpi-card">
+                    <div class="kpi-icon green"><i class="ri-check-line"></i></div>
+                    <div class="kpi-info">
+                        <h3>Disponibles</h3>
+                        <h2 id="kpi-disponibles">0</h2>
+                    </div>
+                </div>
+                <div class="glass-card kpi-card">
+                    <div class="kpi-icon red"><i class="ri-car-fill"></i></div>
+                    <div class="kpi-info">
+                        <h3>Ocupadas</h3>
+                        <h2 id="kpi-ocupadas">0</h2>
+                    </div>
+                </div>
+                <div class="glass-card kpi-card">
+                    <div class="kpi-icon gold"><i class="ri-exchange-dollar-line"></i></div>
+                    <div class="kpi-info">
+                        <h3>Ingresos Hoy</h3>
+                        <h2 id="kpi-ingresos">--</h2>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECCIÓN DUAL (MAPA y ACTIVIDAD) -->
+            <section class="dual-layout pt-4">
+
+                <!-- MAPA DE CELDAS -->
+                <div class="glass-card">
+                    <div class="card-header">
+                        <h3>Mapa del Parqueadero</h3>
+                        <div class="legend">
+                            <span class="dot green"></span> Libre
+                            <span class="dot red ml-2"></span> Ocupada
+                        </div>
+                    </div>
+                    <div class="parking-grid" id="parking-grid">
+                        <!-- Renderizado dinámicamente desde JS -->
+                        <div class="celda-loading">Cargando mapa...</div>
+                    </div>
+                </div>
+
+                <!-- PANEL LATERAL (NUEVO INGRESO & ACTIVIDAD RECIENTE) -->
+                <div class="right-panel">
+
+                    <div class="glass-card form-card">
+                        <div class="card-header">
+                            <h3>Registrar Ingreso</h3>
+                        </div>
+                        <form id="ingreso-form">
+                            <div class="input-inline">
+                                <input type="text" id="nueva-placa" placeholder="Placa (ej. ABC-123)" required>
+                                <select id="select-celda" required>
+                                    <option value="" disabled selected>Elegir Celda</option>
+                                    <!-- Celdas disponibles se llenan desde JS -->
+                                </select>
+                                <button type="submit" class="btn-primary"><i class="ri-add-line"></i> Ingreso</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="glass-card activity-card mt-4">
+                        <div class="card-header">
+                            <h3>Vehículos en Parqueadero</h3>
+                            <button class="btn-icon" onclick="loadDashboardData()"><i
+                                    class="ri-refresh-line"></i></button>
+                        </div>
+                        <div class="activity-list" id="activity-list">
+                            <!-- Renderizado dinámicamente -->
+                            <div class="list-empty">No hay vehículos registrados activos.</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="./js/api.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+
+</html>
