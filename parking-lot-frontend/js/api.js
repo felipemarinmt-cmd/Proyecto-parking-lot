@@ -55,4 +55,7 @@ const API = {
 
     // Fallback opcional si tienes endpoint de resumen, 
     // pero calcularemos del lado del cliente por simplicidad/rapidez para la demo si no hay admin.
+
+    // Exponiendo la función base para peticiones directas desde app.js
+    fetch: apiFetch
 };

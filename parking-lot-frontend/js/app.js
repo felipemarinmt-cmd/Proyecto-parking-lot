@@ -147,7 +147,7 @@ function renderActivos() {
         div.className = 'activity-item';
         div.innerHTML = `
       <div class="act-info">
-        <h4>Placa: ${a.placa.toUpperCase()}</h4>
+        <h4>Placa: ${a.placa ? a.placa.toUpperCase() : 'N/A'}</h4>
         <p>Celda ${a.numero_celda} • Ingreso: ${horaInfo}</p>
       </div>
       <button class="btn-sm-danger" onclick="darSalida(${a.id_acceso})">Da Salida</button>
@@ -166,19 +166,23 @@ ingresoForm.addEventListener('submit', async (e) => {
     if (!placa || !celda_id) return;
 
     try {
-        // Primero validamos/registramos el vehículo (hack rápido: intentar crearlo, 
-        // ignorar error si ya existe por el endpoint)
         let vehiculo_id = null;
 
-        // Lo más elegante es llamar a un endpoint para buscar el vehiculo o crearlo, 
-        // por velocidad lo forzamos. En un caso real buscaríamos por GET /vehiculos/:placa
         try {
-            const vRes = await apiFetch(`/vehiculos/${placa}`);
+            // Check if vehicle exists
+            const vRes = await API.fetch(`/vehiculos/${placa}`);
+            // If API returns an array (from some backends), take the first element or handle differently
+            // Based on backend vehiculo.controller.js it returns a single object if found.
             vehiculo_id = vRes.id_vehiculo;
         } catch {
-            // no existe, registrar
+            // Create if it doesn't exist
+            const user = JSON.parse(localStorage.getItem('parklot_user'));
             const createRes = await API.registrarVehiculo(placa);
             vehiculo_id = createRes.id;
+        }
+
+        if (!vehiculo_id) {
+            throw new Error("No se pudo obtener ni registrar el vehículo.");
         }
 
         // Registrar el acceso

@@ -103,6 +103,7 @@ body {
     gap: 10px;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -203,6 +204,7 @@ body {
     gap: 12px;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -554,8 +556,243 @@ body {
 ::-webkit-scrollbar-thumb {
     background: var(--border-glass);
     border-radius: 10px;
-}
 
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+    .kpi-info h2 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-top: 4px;
+    }
+
+    /* DUAL LAYOUT (Map & Activity) */
+    .dual-layout {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+    }
+
+    .card-header {
+        padding: 20px;
+        border-bottom: 1px solid var(--border-glass);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .card-header h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+
+    .legend .dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+    }
+
+    .legend .dot.green {
+        background: var(--status-green);
+    }
+
+    .legend .dot.red {
+        background: var(--status-red);
+    }
+
+    /* VISUAL PARKING GRID */
+    .parking-grid {
+        padding: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 15px;
+        min-height: 300px;
+    }
+
+    .celda-item {
+        aspect-ratio: 1;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border: 2px solid transparent;
+        transition: transform 0.2s;
+        cursor: pointer;
+    }
+
+    .celda-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .celda-disponible {
+        background: rgba(0, 210, 135, 0.05);
+        border-color: rgba(0, 210, 135, 0.3);
+        color: var(--status-green);
+    }
+
+    .celda-ocupada {
+        background: rgba(255, 51, 102, 0.05);
+        border-color: rgba(255, 51, 102, 0.3);
+        color: var(--status-red);
+    }
+
+    .celda-ocupada span {
+        font-size: 0.7rem;
+        opacity: 0.8;
+        margin-top: 4px;
+    }
+
+    /* FORMULARIO INGRESO */
+    .input-inline {
+        display: flex;
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .input-inline input,
+    .input-inline select {
+        flex: 1;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border-glass);
+        border-radius: 6px;
+        color: #fff;
+        padding: 10px;
+        font-family: inherit;
+        outline: none;
+    }
+
+    .input-inline select option {
+        background: var(--bg-dark);
+        color: #fff;
+    }
+
+    /* ACTIVITY LIST */
+    .activity-card {
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 150px);
+    }
+
+    .btn-icon {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    .btn-icon:hover {
+        color: var(--primary);
+    }
+
+    .activity-list {
+        padding: 10px 20px;
+        overflow-y: auto;
+        max-height: 400px;
+    }
+
+    .list-empty {
+        text-align: center;
+        color: var(--text-muted);
+        padding: 40px 0;
+    }
+
+    .activity-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-glass);
+    }
+
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+
+    .act-info h4 {
+        font-size: 1rem;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .act-info p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .btn-sm-danger {
+        background: rgba(255, 51, 102, 0.1);
+        color: var(--status-red);
+        border: 1px solid rgba(255, 51, 102, 0.3);
+        border-radius: 6px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .btn-sm-danger:hover {
+        background: var(--status-red);
+        color: #fff;
+    }
+
+    /* CUSTOM SCROLLBAR */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--border-glass);
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* --- RESPONSIVE MEDIA QUERIES --- */
+    @media (max-width: 1200px) {
+        .kpi-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .dual-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .activity-card {
+            height: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .layout-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .glass-sidebar {
+            display: none;
+            /* In a real app, this would be a togglable menu */
+        }
+
+        .kpi-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .input-inline {
+            flex-direction: column;
+        }
+
+        .main-content {
+            padding: 20px;
+        }
+    }
 }
