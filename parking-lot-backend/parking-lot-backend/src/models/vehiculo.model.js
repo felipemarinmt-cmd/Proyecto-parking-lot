@@ -2,7 +2,14 @@ const db = require("../config/db");
 
 const vehiculo = {
   getAll: async () => {
-    const [rows] = await db.query("SELECT * FROM VEHICULO");
+    const [rows] = await db.query(`
+      SELECT 
+        v.*,
+        u.primer_nombre, u.primer_apellido,
+        u.numero_documento AS documento_propietario
+      FROM VEHICULO v
+      LEFT JOIN USUARIO u ON v.usuario_id = u.id_usuario
+    `);
     return rows;
   },
 
@@ -32,7 +39,7 @@ const vehiculo = {
 
   delete: async (id) => {
     await db.query("DELETE FROM VEHICULO WHERE id_vehiculo = ?", [id]);
-  },
+  }
 };
 
 module.exports = vehiculo;

@@ -10,7 +10,7 @@ const celda = {
     const [rows] = await db.query("SELECT * FROM CELDA WHERE estado = 'disponible'");
     return rows;
   },
-  
+
   getOcupadas: async () => {
     const [rows] = await db.query("SELECT * FROM CELDA WHERE estado = 'ocupada'");
     return rows;
